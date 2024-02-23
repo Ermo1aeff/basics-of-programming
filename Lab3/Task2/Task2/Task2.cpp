@@ -4,57 +4,51 @@
 
 using namespace std;
 
-const int ColCnt = 3;
-const int RowCnt = 8;
-
-bool isAscendOrder(int* arr) {
-
-	//int arrSize1 = sizeof(arr);
-	//int arrSize2 = sizeof(*arr);
-
-	//cout << "\n";
-	//cout << arrSize;
+bool isAscendOrder(int* arr, int _colCnt) {
 
 	int* lastValue = arr;
 
-	for (int* i{ arr + 1 }; i != arr + ColCnt; i++) {
-		if (*lastValue <= *i)
-			*lastValue = *i;
-		else
-			return false;
+	for (int* i{ arr + 1 }; i != arr + _colCnt; i++) {
+
+		if (*lastValue <= *i) *lastValue = *i;
+		else return false;
 	}
 	return true;
 }
 
 void main() {
 
-	int arr[RowCnt][ColCnt]{};
+	const int colCnt = 3;
+	const int rowCnt = 8;
+
+	int arr[rowCnt][colCnt]{};
 
 	//int arrSize1 = sizeof(arr);
 	//int arrSize2 = sizeof(*arr);
 
 	// Инициализация генератора случайных чисел 
-	random_device rd; // экземпляр класса random_device для ГПСЧ //Если это кто-то будет читать, коментарии могут не соотвествовать действительным операциям
-	mt19937 gen(rd()); // задаем генератор по алгоритму mt19937
-	uniform_int_distribution<> dis(0, 3); //указываем диапазон генерации
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<> dis(0, 3);
 
-	for (int* i{ *arr }; i != *arr + RowCnt * ColCnt; i++) {
+	for (int* i{ *arr }; i != *arr + rowCnt * colCnt; i++) {
 		*i = dis(gen);
 	}
 
-	for (int* i{ *arr }; i != *arr + RowCnt * ColCnt; i++) {
+	for (int* i{ *arr }; i != *arr + rowCnt * colCnt; i++) {
+
 		cout << *i << ' ';
 
-		if ((i + 1 - *arr) % ColCnt == 0) {
+		if ((i + 1 - *arr) % colCnt == 0) {
 			cout << '\n';
 		}
 	}
 
-	for (int* i{ *arr }; i <= *arr + RowCnt * ColCnt - 1; i += ColCnt) {
+	for (int* i{ *arr }; i <= *arr + rowCnt * colCnt - 1; i += colCnt) {
 
-		cout << isAscendOrder(i) << '\n';
+		cout << isAscendOrder(i, colCnt) << '\n';
 
-		if ((i + 1 - *arr) % ColCnt == 0) {
+		if ((i + 1 - *arr) % colCnt == 0) {
 			cout << '\n';
 		}
 	}

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <random>
 
 using namespace std;
 
@@ -18,17 +19,27 @@ int main(int argc, char* agrv[]) {
 	int* arrA{ new int[arrACnt] };
 	int* arrB{ new int[arrBCnt] };
 
-	cout << "Заполнение массива А\n";
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<> dis(-9, 9);
+
 	for (int* i = arrA; i != arrA + arrACnt; i++) {
-		cout << i - arrA + 1 << ": ";
-		cin >> *i;
+		*i = dis(gen);
 	}
 
-	cout << "Заполнение массива B\n";
 	for (int* i = arrB; i != arrB + arrBCnt; i++) {
-		cout << i - arrB + 1 << ": ";
-		cin >> *i;
+		*i = dis(gen);
 	}
+
+	for (int* i = arrA; i != arrA + arrACnt; i++) {
+		cout << *i << " ";
+	}
+	cout << "\n";
+
+	for (int* i = arrB; i != arrB + arrBCnt; i++) {
+		cout << *i << " ";
+	}
+	cout << "\n";
 
 	int negNumCnt_A{}, negNumCnt_B{};
 
@@ -40,5 +51,5 @@ int main(int argc, char* agrv[]) {
 		if (*i < 0) negNumCnt_B++;
 	}
 
-	negNumCnt_A > negNumCnt_B ? cout << "A" : cout << "B";
+	negNumCnt_A != negNumCnt_B ? negNumCnt_A > negNumCnt_B ? cout << "A" : cout << "B" : cout << "A = B";
 }

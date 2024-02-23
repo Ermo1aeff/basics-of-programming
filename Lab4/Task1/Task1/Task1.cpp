@@ -1,45 +1,52 @@
 ﻿#include <iostream>
 #include <string>
-//#include <iostream>
 
 using namespace std;
+
+char* resizeArray(char* str, int size) {
+	char* tmp;
+	tmp = new char[size + 1]{};
+	memcpy(tmp, str, size);
+	delete[] str;
+	return tmp;
+}
+
+bool isBelong(char* arr, int arrSize, char* _word, int wordSize) {
+	
+	bool flag = false;
+
+	for (int i = 0; i < wordSize; i++)
+	{
+		flag = false;
+
+		for (int j = 0; j < arrSize; j++)
+		{
+			if (_word[i] == arr[j])
+			{
+				flag = true;
+				break;
+			}
+		}
+
+		if (!flag) return false;
+	}
+	return true;
+}
 
 int main()
 {
 	setlocale(LC_ALL, "RUS");
 
 	char str[]{ "Мама мыла раму" };
-	char substr[]{ "Мамеететет" };
+	char substr[]{ "Мамеетететрруипш" };
+	//char substr[]{ "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" };
 
+	int signCnt{};
 
-	int signCnt = 0;
-	char newStr[]{ "" };
-
-
-	//Определение количества уникальных символов
-	//int length = sizeof(substr);
-
-	//for (int i = 0; i < length - 1; i++)
-	//{
-	//	for (int j = 0; j < length - 1; j++)
-	//	{
-	//		if (i == j)
-	//		{
-	//			signCnt++;
-	//			break;
-	//		}
-
-	//		if ((substr[i] == substr[j]) && (i != j))
-	//		{
-	//			break;
-	//		}
-	//	}
-	//}
-
-
-	//Определение количества уникальных символов
+	//Подсчет уникальных символов
 	int strLen = sizeof(str);
 	int substrLen = sizeof(substr);
+	char* uniqSubstr = new char[1]{}; // Один элемент для хранения нулевого символа
 
 	for (int i = 0; i < substrLen - 1; i++)
 	{
@@ -48,6 +55,8 @@ int main()
 			if (i == j) // Если в подстроке такого символа не было, сравниваем с основной строкой
 			{
 				signCnt++;
+				uniqSubstr = resizeArray(uniqSubstr, signCnt);
+				uniqSubstr[signCnt-1] = substr[i];
 				break;
 			}
 
@@ -56,62 +65,58 @@ int main()
 		}
 	}
 
-	//char* k = new char[signCnt]();
-	//*k = 'f';
-	//cout << *k;
+	cout << "Количество уникальных символов в подстроке: " << signCnt << "\n";
+	cout << "Строка уникальных символов: " << uniqSubstr << "\n";
 
-	cout << "Количество уникальных символов в подстроке: " << signCnt;
+	int newWordLen{};
+	char* newWord = new char[1] {};
 
-	//char* uniqSubstr = new char[signCnt]();
-	//char* newStr = new char[0]();
-
-	//for (int i = 0; i < substrLen - 1; i++)
-	//{
-	//	for (int j = 0; j < strLen - 1; j++)
-	//	{
-	//		if (str[j] == uniqSubstr[i])
-	//		{
-	//			newStr += '4';
-	//		}
-	//	}
-	//}
-
-	//for (int k = 0; k < strLen - 1; k++)
-	//{
-	//	if (strLen[k] = )
-	//	{
-
-	//	}
-	//}
-
+	int resultStrLen{};
+	char* resultStr = new char[1] {};
 	
+	bool isWord = true;
 
-	//int length = sizeof(substr);
+	char old = ' ';
 
-	//for (char* i = substr; i < substr + length - 1; i++)
-	//{
-	//	for (char* j = substr; j < substr + length - 1; j++)
-	//	{
-	//		//cout << &i << " : " << &j;
+	for (int i = 0; i < strLen; i++)
+	{
 
-	//		if (&i == &j)
-	//		{
-	//			signCnt++;
-	//			break;
-	//		}
+		if ((old == ' ') && (str[i] != ' '))
+		{
+			isWord = true; // Если новое слово - true
+			newWord = new char[1] {};
+			newWordLen = 0;
+		}
 
-	//		if ((i == j) && (&i != &j))
-	//		{
-	//			break;
-	//		}
-	//	}
-	//}
+		if (isWord)
+		{
+			if (str[i] != ' ' && str[i] != '\0') // Если новый символ - проверяем, есть ли он в заданной подстроке
+			{
+				newWordLen++;
+				newWord = resizeArray(newWord, newWordLen);
+				newWord[newWordLen - 1] = str[i];
+			}
+			else // Если конец слова 
+			{
+				if (isBelong(uniqSubstr, signCnt, newWord, newWordLen)) // Проверяем на содержание симвлолов в подстроке
+				{
+					resultStr = resizeArray(resultStr, resultStrLen + newWordLen + 1);
+					for (int j = 0; j < newWordLen; j++)
+					{
+						resultStr[resultStrLen + j] = newWord[j];
+					}
+					resultStrLen += newWordLen;
+					resultStr[resultStrLen] = ' ';
+					resultStrLen++;
 
+					cout << "Слово : " << newWord << "\n";
+				}
+				isWord = false;
+				delete[] newWord;
+			}
+		}
+		old = str[i];
+	}
 
-
-	/*for (char i : str) {
-
-	}*/
-
-
+	cout << "Результирующая строка: " << resultStr << "\n";
 }

@@ -1,3 +1,28 @@
 ﻿  Task4.cpp
-C:\Users\1\source\repos\Task4\Task4\Task4.cpp(15,13): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
-  Task4.vcxproj -> C:\Users\1\source\repos\Task4\Debug\Task4.exe
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(14,13): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(25,2): error C2065: list: необъявленный идентификатор
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(25,7): error C2275: circle: недопустимое использование этого типа в качестве выражения
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(8): message : см. объявление "circle"
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(25,15): error C2065: circleList: необъявленный идентификатор
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(41,4): error C2065: circleList: необъявленный идентификатор
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,25): error C2065: circleList: необъявленный идентификатор
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,25): error C2672: "begin": не найдена соответствующая перегруженная функция
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): error C2893: Сбой при специализации функции-шаблона "unknown-type std::begin(_Container &)".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(1844): message : см. объявление "std::begin"
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): message : Со следующими аргументами шаблона:
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): message : "_Container=unknown-type"
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): error C2784: const _Elem *std::begin(std::initializer_list<_Elem>) noexcept: не удалось вывести аргумент шаблон для "std::initializer_list<_Elem>" из "unknown-type"
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\initializer_list(55): message : см. объявление "std::begin"
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,25): error C2672: "end": не найдена соответствующая перегруженная функция
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): error C2893: Сбой при специализации функции-шаблона "unknown-type std::end(_Container &)".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(1854): message : см. объявление "std::end"
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): message : Со следующими аргументами шаблона:
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): message : "_Container=unknown-type"
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): error C2784: const _Elem *std::end(std::initializer_list<_Elem>) noexcept: не удалось вывести аргумент шаблон для "std::initializer_list<_Elem>" из "unknown-type"
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\initializer_list(60): message : см. объявление "std::end"
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): error C3536: <begin>$L0: не может использоваться до инициализации
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): error C3536: <end>$L0: не может использоваться до инициализации
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,35): error C2100: недопустимое косвенное обращение
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): error C2440: инициализация: невозможно преобразовать "int" в "const circle &"
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): message : Причина: невозможно преобразовать "int" в "const circle"
+C:\Users\1\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab2\Task4\Task4\Task4.cpp(51,37): message : Ни один конструктор не смог принять исходный тип, либо разрешение перегрузки конструктора неоднозначно

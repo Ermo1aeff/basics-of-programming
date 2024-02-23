@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
+#include <random>
 
 using namespace std;
 
-void main(int agrc, char* agrv[]) {
+void main() {
 
 	setlocale(LC_ALL, "RUS");
 
@@ -14,19 +15,28 @@ void main(int agrc, char* agrv[]) {
 
 	int* arr{ new int[arrCnt] };
 
-	cout << "Заполнение массива\n";
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<> dis(-9, 9);
 
 	for (int* i{ arr }; i <= arr + arrCnt - 1; i++) {
-		cout << i - arr + 1 << ") ";
-		cin >> *i;
+		*i = dis(gen);
 	}
+
+	cout << "Исходный массив:\n";
+	for (int* i{ arr }; i <= arr + arrCnt - 1; i++) {
+		cout << *i << " ";
+	}
+	cout << "\n";
 
 	for (int* i{ arr }; i <= arr + arrCnt - 1; i++) {
 		if (*i >= 0) *i = pow(*i, 2);
 	}
 
+	cout << "Результирующий массив\n";
 	for (int* i{ arr }; i <= arr + arrCnt - 1; i++) {
 		cout << *i << " ";
 	}
+	cout << "\n";
 }
 
