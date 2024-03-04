@@ -4,19 +4,6 @@
 
 using namespace std;
 
-
-
-//int* findMin(int(*arr)[arrSize]) {
-//
-//	int* minValue = *arr;
-//
-//	for (int* i{ *arr + 1 }; i != *arr + arrSize; i++) {
-//		if (minValue > i) minValue = i;
-//	}
-//
-//	return minValue;
-//}
-
 // Функция выполняющая поиск минимального значения
 int* findMin(int* arr, int _arrSize) {
 
@@ -33,15 +20,12 @@ void main() {
 
 	setlocale(LC_ALL, "RUS");
 
-	int arrSize = 10; // Инициализация динамического массива
+	int arrSize{}; // Инициализация динамического массива
+
+	cout << "Укажите размер массива: ";
+	cin >> arrSize;
+
 	int* arr = new int[arrSize]{};
-
-	//cout << arr;
-
-	//int arr[arrSize]{};
-
-	//int arrSize1 = sizeof(arr);
-	//int arrSize2 = sizeof(*arr);
 
 	// Инициализация генератора случайных чисел 
 	random_device rd;
@@ -53,18 +37,10 @@ void main() {
 		*i = dis(gen);
 	}
 
-	//arr = new int[20];
-
 	// Вывод элементов массива
-	for (int* i{ arr }; i != arr + arrSize + arrSize; i++) {
-		cout << *i << ' ';
-	}
-	cout << '\n';
-
-	// Вывод адресов элементов массива
-	cout << "Адреса элементов массива: \n";
 	for (int* i{ arr }; i != arr + arrSize; i++) {
-		cout << i << ' ';
+		cout << *i << ' ';
+		cout << i << '\n';
 	}
 	cout << '\n';
 
