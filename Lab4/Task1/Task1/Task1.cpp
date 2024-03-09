@@ -1,95 +1,60 @@
 ﻿#include <iostream>
-#include <string>
-
-#include <ctime>
-#include <chrono>
+#include <windows.h>
+#include "functions.h"
+//#define debug
 
 using namespace std;
 
-char* resizeArray(char* str, int size) {
-	char* tmp;
-	tmp = new char[size + 1]{};
-	memcpy(tmp, str, size);
-	delete[] str;
-	return tmp;
-}
-
-
-//bool isBelong(char* arr, int arrSize, char* _word, int wordSize) {
-//
-//	bool flag = false;
-//
-//	for (int i = 0; i < wordSize; i++)
-//	{
-//		flag = false;
-//
-//		for (int j = 0; j < arrSize; j++)
-//		{
-//			if (_word[i] == arr[j])
-//			{
-//				flag = true;
-//				break;
-//			}
-//		}
-//
-//		if (!flag) return false;
-//	}
-//	return true;
-//}
-
-bool isBelong(char* arr, int arrSize, char* _word, int wordSize) {
-	
-	bool flag = false;
-
-	for (int i = 0; i < arrSize; i++)
-	{
-		flag = false;
-
-		for (int j = 0; j < wordSize; j++)
-		{
-			if (_word[j] == arr[i])
-			{
-				flag = true;
-				break;
-			}
-		}
-
-		if (!flag) return false;
-	}
-	return true;
-}
-
 int main()
 {
+	// Установка кириллицы для программы
+	SetConsoleCP(1251); 
+	SetConsoleOutputCP(1251);
 	setlocale(LC_ALL, "RUS");
 
-	char str[]{ "мама мыла раму" };
-	char substr[]{ "ма"};
-	//char substr[]{ "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" };
+	// Инициализация массива строки
+	int strLen{ 1 }; // Одна ячейка под нулевой элемент, для правильного определения конца строки
+	char* str = new char[strLen] {};
+
+	cout << "Введите строку: ";
+	
+	while (cin.peek() != '\n')
+	{
+		str = resizeArray(str, strLen, 1); // Расширение массива на 1 элемент
+		cin >> noskipws >> str[strLen - 1]; // Запись из буфера консоли в массив
+		strLen++;
+	}
+
+	cin.ignore(); // Пропуск символа перехода на новую строку (\n)
+
+	int substrLen{ 1 };
+	char* substr = new char[substrLen] {};
+
+	cout << "Введите подстроку: ";
+
+	while (cin.peek() != '\n')
+	{
+		substr = resizeArray(substr, substrLen, 1);
+		cin >> substr[substrLen - 1];
+		substrLen++;
+	}
 
 	int signCnt{};
 
-	int uniqSubstrLen = 1;
+	int uniqSubstrLen{ 1 };
 	int j{};
 
 	//Удаление повторяющихся символов (алгоритм можно оптимизировать, сравнивая со строкой уникальных символов)
-	int strLen = sizeof(str);
-	int substrLen = sizeof(substr);
 	char* uniqSubstr = new char[uniqSubstrLen]{}; // Один элемент для хранения нулевого символа
 
 	bool isExist = false;
-
-	//time_t seconds = time(NULL);
-	//tm* timeinfo = localtime(&seconds);
-
-	auto start = std::chrono::high_resolution_clock::now();
 
 	for (int i = 0; i < substrLen - 1; i++) // Проверка 
 	{
 		isExist = false;
 		j = 0;
 
-		while (j < uniqSubstrLen) 
+		while (j < uniqSubstrLen - 1) 
 		{
 			if (uniqSubstr[j] == substr[i])
 			{
@@ -101,43 +66,27 @@ int main()
 
 		if (!isExist)
 		{
-			signCnt++;
+			uniqSubstr = resizeArray(uniqSubstr, uniqSubstrLen, 1);
+			uniqSubstr[uniqSubstrLen - 1] = substr[i];
 			uniqSubstrLen++;
-			uniqSubstr = resizeArray(uniqSubstr, signCnt);
-			uniqSubstr[signCnt - 1] = substr[i];
+			signCnt++;
 		}
-
-
-		//for (int j = 0; j < substrLen - 1; j++)
-		//{
-		//	if (i != j)
-		//	{
-		//		if (substr[i] == substr[j]) break; // Если символ встретился реньше - выход
-		//	}
-		//	else // Если программа дошла до текущего символа - производится его запись
-		//	{
-		//		signCnt++;
-		//		uniqSubstr = resizeArray(uniqSubstr, signCnt);
-		//		uniqSubstr[signCnt - 1] = substr[i];
-		//		break;
-		//	}
-		//}
 	}
 
-	auto end = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double> duration = end - start;
-	std::cout << "Время выполнения: " << duration.count()*10000 << " секунд\n";
-
+	#ifdef debug
 	cout << "Количество уникальных символов в подстроке: " << signCnt << "\n";
 	cout << "Строка уникальных символов: " << uniqSubstr << "\n";
+	#endif
 
-	int newWordLen{};
-	char* newWord = new char[1] {};
+	int newWordLen{ 1 };
+	char* newWord = new char[newWordLen] {};
 
-	int resultStrLen{};
-	char* resultStr = new char[1] {};
+	int resultStrLen{ 1 };
+	char* resultStr = new char[resultStrLen] {};
 	
-	bool isWord = true;
+	bool isWord = false;
+
+	bool isFirstSubstring = false;
 
 	char old = ' ';
 
@@ -146,34 +95,64 @@ int main()
 		if ((old == ' ') && (str[i] != ' ')) // Определение нового слова
 		{
 			isWord = true;
-			newWord = new char[1] {};
-			newWordLen = 0;
+			newWordLen = 1;
+			newWord = new char[newWordLen] {};
 		}
 
 		if (isWord)
 		{
-			if (str[i] != ' ' && str[i] != '\0') // Проверка окончания слова
+			if ((str[i] != ' ') && (str[i] != '\0')) // Проверка окончания слова
 			{
-				newWordLen++;
-				newWord = resizeArray(newWord, newWordLen);
+				newWord = resizeArray(newWord, newWordLen, 1);
 				newWord[newWordLen - 1] = str[i];
+				newWordLen++;
 			}
-			else // Если конец слова 
+			else // Если конец слова
 			{
-				if (isBelong(uniqSubstr, signCnt, newWord, newWordLen)) // Проверка на содержание симвлолов в подстроке
+				#ifdef debug
+				cout << "Слово: " << newWord << '\n';
+				#endif
+				// Проверка, является ли слово подстрокой
+				if (isSubstring(substr, substrLen, newWord, newWordLen) && !isFirstSubstring)
 				{
-					resultStr = resizeArray(resultStr, resultStrLen + newWordLen + 1); // Расширение строки + 1 элемент под разделитель
+					char* strBuf = new char[resultStrLen]; // Объявление буфера
+					memcpy(strBuf, resultStr, resultStrLen); // Передача результирующей строки в буфер 
 
-					memcpy(resultStr + resultStrLen, newWord, newWordLen); // Запись слова в общую результатирующую строку (вар 1)
+					#ifdef debag 
+					cout << "Подстрока: " << strBuf << '\n'; 
+					#endif
 
+					resultStr = resizeArray(resultStr, resultStrLen, newWordLen); // Расширение строки + 1 элемент под разделитель
+
+					memcpy(resultStr, newWord, newWordLen); // Передача слова в начало результ. строки  
+
+					resultStr[newWordLen - 1] = ' ';
+
+					memcpy(resultStr + newWordLen, strBuf, resultStrLen - 1); // Прибавление буфера к строке
 					resultStrLen += newWordLen;
-					resultStr[resultStrLen] = ' ';
-					resultStrLen++;
 
-					cout << "Слово : " << newWord << "\n";
+					isFirstSubstring = true;
 				}
-				isWord = false;
-				delete[] newWord;
+				else 
+				{
+					// Проверка на содержание симвлолов в подстроке ( ПЕРЕПРОВЕРИТЬ! )
+					if (isBelong(uniqSubstr, signCnt, newWord, newWordLen))
+					{
+						resultStr = resizeArray(resultStr, resultStrLen, newWordLen); // Расширение строки - 1, т.к. нулевой символ не учитывается и + 1 под разделитель слов
+
+						memcpy(resultStr + resultStrLen - 1, newWord, newWordLen - 1); // Запись слова в общую результатирующую строку
+
+						resultStrLen += newWordLen - 1; // Обновление размера массива (- 1 т.к. один элемент считается нулевым)
+						resultStr[resultStrLen - 1] = ' ';
+						resultStrLen++;
+
+						#ifdef debug  
+						cout << "Слово, содержащее все символы подстроки: " << newWord << '\n';
+						#endif
+					}
+					isWord = false;
+					delete[] newWord;
+				}
 			}
 		}
 		old = str[i];
@@ -181,5 +160,6 @@ int main()
 
 	cout << "Результирующая строка: " << resultStr << "\n";
 
+	cin.get();
 	cin.get();
 }
