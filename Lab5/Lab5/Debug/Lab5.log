@@ -1,0 +1,5 @@
+﻿  input.cpp
+C:\Users\egork\OneDrive\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab5\Lab5\input.cpp(43,33): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Users\egork\OneDrive\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab5\Lab5\input.cpp(46,32): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Users\egork\OneDrive\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab5\Lab5\input.cpp(63,32): warning C4551: в вызове функции отсутствует список аргументов
+  Lab5.vcxproj -> C:\Users\egork\OneDrive\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab5\Debug\Lab5.exe

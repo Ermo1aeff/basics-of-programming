@@ -1,2 +1,4 @@
 ﻿  Task2.cpp
+C:\Users\egork\OneDrive\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab4\Task2\Task2\Task2.cpp(21,23): warning C4018: <=: несоответствие типов со знаком и без знака
+C:\Users\egork\OneDrive\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab4\Task2\Task2\Task2.cpp(46,23): warning C4018: <=: несоответствие типов со знаком и без знака
   Task2.vcxproj -> C:\Users\egork\OneDrive\Рабочий стол\РГАТУ\Основы программирования\2 семестр\Lab4\Task2\Debug\Task2.exe

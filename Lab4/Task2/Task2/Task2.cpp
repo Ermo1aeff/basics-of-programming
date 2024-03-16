@@ -1,84 +1,98 @@
-﻿// Task2.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
-#include <iostream>
+﻿#include <iostream>
 #include <sstream>
 #include <string.h>
+#include <Windows.h>
 
 using namespace std;
 
-//struct 
-
-string* split(string str, char spltr)
+struct splitResult 
 {
-    string* subs = new string[0]{};
+    string** subs = new string * [0] {};
+    int subsCnt{};
+};
+
+splitResult split(string str, char spltr)
+{
     int subsCnt = 0;
     char old = spltr;
-    string sub{};
     bool isSub = false;
 
-    for (char item : str)
+    // Подсчёт количества подстрок
+    for (int i = 0; i <= str.size(); i++)
     {
-        if ((old == spltr) && (item != spltr)) {
+        // Определение начала подстроки
+        if ((old == spltr) && (str[i] != spltr)) {
+            isSub = true;
+        }
+
+        if (isSub)
+        {
+            if ((str[i] == spltr) || (str[i] == '\0'))
+            {
+                subsCnt++;
+                isSub = false;
+            }
+        }
+        old = str[i];
+    }
+
+    splitResult result;
+    string** subs = new string * [subsCnt] {};
+    string sub{};
+
+    old = spltr;
+    int ssCount = 0;
+
+    for (int i = 0; i <= str.size(); i++)
+    {
+        // Определение начала подстроки
+        if ((old == spltr) && (str[i] != spltr)) {
             sub = "";
             isSub = true;
         }
 
         if (isSub) 
         {
-            if ((item != spltr))
+            if ((str[i] != spltr) && (str[i] != '\0'))
             {
-                sub += item;
+                sub += str[i];
             } 
             else
             {
-                // Расширение массива
-                string* tmp = new string[subsCnt + 1];
-                memcpy(tmp, subs, subsCnt);
-                delete[] subs;
-                subs = tmp;
-
-                subs[subsCnt] = sub;
-
-                subsCnt++;
+                subs[ssCount] = new string{ sub };
+                ssCount++;
                 isSub = false;
             }
         }
-
-        old = item;
+        old = str[i];
     }
-    return subs;
+
+    result.subs = subs;
+    result.subsCnt = subsCnt;
+
+    return result;
 }
 
 int main()
 {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "RUS");
-
-    //string s1 = "Hello ";
-    //string s2 = "World";
-    //string s3 = "!";
-
-    //string* subs = new string[]{s1, s2, s3};
-    //cout << *subs;
-    //cout << *(subs + 1);
-    //cout << *(subs + 2);
-
     string str;
     char splitter = 0;
+
     cout << "Введите строку: ";
-    std::getline(cin, str);
+    getline(cin, str);
+
     cout << "Укажите разделитель: ";
     cin >> noskipws >> splitter;
-    string* subs = split(str, splitter);
+
+    splitResult result = split(str, splitter);
+
+    for (int i{0}; i < result.subsCnt; i++) {
+        cout << i + 1 << ") " << *result.subs[i] << "\n";
+    }
+
+    cin.get();
+    cin.get();
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.

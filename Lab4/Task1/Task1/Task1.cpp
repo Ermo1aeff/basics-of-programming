@@ -1,9 +1,6 @@
-﻿#include <iostream>
-#include <windows.h>
-#include "functions.h"
-//#define debug
+﻿#include "header.h"
 
-using namespace std;
+//#define debug
 
 int main()
 {
@@ -113,28 +110,28 @@ int main()
 				cout << "Слово: " << newWord << '\n';
 				#endif
 				// Проверка, является ли слово подстрокой
-				if (isSubstring(substr, substrLen, newWord, newWordLen) && !isFirstSubstring)
-				{
-					char* strBuf = new char[resultStrLen]; // Объявление буфера
-					memcpy(strBuf, resultStr, resultStrLen); // Передача результирующей строки в буфер 
+				//if (isSubstring(substr, substrLen, newWord, newWordLen) && !isFirstSubstring)
+				//{
+				//	char* strBuf = new char[resultStrLen]; // Объявление буфера
+				//	memcpy(strBuf, resultStr, resultStrLen); // Передача результирующей строки в буфер 
 
-					#ifdef debag 
-					cout << "Подстрока: " << strBuf << '\n'; 
-					#endif
+				//	#ifdef debag 
+				//	cout << "Подстрока: " << strBuf << '\n'; 
+				//	#endif
 
-					resultStr = resizeArray(resultStr, resultStrLen, newWordLen); // Расширение строки + 1 элемент под разделитель
+				//	resultStr = resizeArray(resultStr, resultStrLen, newWordLen); // Расширение строки + 1 элемент под разделитель
 
-					memcpy(resultStr, newWord, newWordLen); // Передача слова в начало результ. строки  
+				//	memcpy(resultStr, newWord, newWordLen); // Передача слова в начало результ. строки  
 
-					resultStr[newWordLen - 1] = ' ';
+				//	resultStr[newWordLen - 1] = ' ';
 
-					memcpy(resultStr + newWordLen, strBuf, resultStrLen - 1); // Прибавление буфера к строке
-					resultStrLen += newWordLen;
+				//	memcpy(resultStr + newWordLen, strBuf, resultStrLen - 1); // Прибавление буфера к строке
+				//	resultStrLen += newWordLen;
 
-					isFirstSubstring = true;
-				}
-				else 
-				{
+				//	isFirstSubstring = true;
+				//}
+				//else 
+				//{
 					// Проверка на содержание симвлолов в подстроке ( ПЕРЕПРОВЕРИТЬ! )
 					if (isBelong(uniqSubstr, signCnt, newWord, newWordLen))
 					{
@@ -152,13 +149,99 @@ int main()
 					}
 					isWord = false;
 					delete[] newWord;
-				}
+				//}
 			}
 		}
 		old = str[i];
 	}
 
-	cout << "Результирующая строка: " << resultStr << "\n";
+	cout << "Результат выполнения 1: " << resultStr << "\n";
+
+	delete[] resultStr;
+
+	// Восстановление начальных значений всех переменных
+	newWordLen = 1;
+	newWord = new char[newWordLen] {};
+
+	resultStrLen = 1 ;
+	resultStr = new char[resultStrLen] {};
+
+	isWord = false;
+
+	isFirstSubstring = false;
+
+	old = ' ';
+
+	for (int i = 0; i < strLen; i++)
+	{
+		if ((old == ' ') && (str[i] != ' ')) // Определение нового слова
+		{
+			isWord = true;
+			newWordLen = 1;
+			newWord = new char[newWordLen] {};
+		}
+
+		if (isWord)
+		{
+			if ((str[i] != ' ') && (str[i] != '\0')) // Проверка окончания слова
+			{
+				newWord = resizeArray(newWord, newWordLen, 1);
+				newWord[newWordLen - 1] = str[i];
+				newWordLen++;
+			}
+			else // Если конец слова
+			{
+				#ifdef debug
+				cout << "Слово: " << newWord << '\n';
+				#endif
+				// Проверка, является ли слово подстрокой
+				if (isSubstring(substr, substrLen, newWord, newWordLen) && !isFirstSubstring)
+				{
+					char* strBuf = new char[resultStrLen]; // Объявление буфера
+					memcpy(strBuf, resultStr, resultStrLen); // Передача результирующей строки в буфер 
+
+					#ifdef debag 
+					cout << "Подстрока: " << strBuf << '\n';
+					#endif
+
+					resultStr = resizeArray(resultStr, resultStrLen, newWordLen); // Расширение строки + 1 элемент под разделитель
+
+					memcpy(resultStr, newWord, newWordLen); // Передача слова в начало результ. строки  
+
+					resultStr[newWordLen - 1] = ' ';
+
+					memcpy(resultStr + newWordLen, strBuf, resultStrLen - 1); // Прибавление буфера к строке
+					resultStrLen += newWordLen;
+
+					delete[] strBuf;
+					isFirstSubstring = true;
+				}
+				else
+				{
+					// Проверка на содержание симвлолов в подстроке ( ПЕРЕПРОВЕРИТЬ! )
+					//if (isBelong(uniqSubstr, signCnt, newWord, newWordLen))
+					//{
+						resultStr = resizeArray(resultStr, resultStrLen, newWordLen); // Расширение строки - 1, т.к. нулевой символ не учитывается и + 1 под разделитель слов
+
+						memcpy(resultStr + resultStrLen - 1, newWord, newWordLen - 1); // Запись слова в общую результатирующую строку
+
+						resultStrLen += newWordLen - 1; // Обновление размера массива (- 1 т.к. один элемент считается нулевым)
+						resultStr[resultStrLen - 1] = ' ';
+						resultStrLen++;
+
+						#ifdef debug  
+						cout << "Слово, содержащее все символы подстроки: " << newWord << '\n';
+						#endif
+					//}
+				}
+				isWord = false;
+				delete[] newWord;
+			}
+		}
+		old = str[i];
+	}
+
+	cout << "Результат выполнения 2: " << resultStr << "\n";
 
 	cin.get();
 	cin.get();
